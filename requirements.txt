@@ -4,3 +4,4 @@ google-genai
 pillow
 edge-tts
 requests
+streamlit-js-eval
