@@ -76,8 +76,8 @@ st.markdown(
     "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;900&display=swap');</style>",
     unsafe_allow_html=True
 )
-st.html("""
-<style>
+st.markdown("""
+</style>""", unsafe_allow_html=True)
 .stApp {
 .stApp {
     background-color: #040608;
