@@ -103,20 +103,26 @@ except Exception:
     api_key = ""
 
 import requests
+from streamlit_js_eval import get_geolocation
 
 @st.cache_data(ttl=900)
-def get_sky_weather(city="London"):
+def get_live_gps_weather(lat, lon):
     try:
-        geo = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1", timeout=5).json()
-        if not geo.get("results"):
-            return None
-        lat = geo["results"][0]["latitude"]
-        lon = geo["results"][0]["longitude"]
-        name = geo["results"][0]["name"]
-        w = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,cloud_cover,wind_speed_10m&wind_speed_unit=mph", timeout=5).json()
+        # GPS coordinates වලින් දැනට ඉන්න නගරයේ නම ලබා ගැනීම
+        geo = requests.get(
+            f"https://api.bigdatacloud.net/data/reverse-geocode-client?latitude={lat}&longitude={lon}&localityLanguage=en",
+            timeout=5
+        ).json()
+        city_name = geo.get("city") or geo.get("locality") or "LOCAL SECTOR"
+
+        # එම GPS coordinates වලට අදාළ Live Weather ලබා ගැනීම
+        w = requests.get(
+            f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,cloud_cover,wind_speed_10m&wind_speed_unit=mph",
+            timeout=5
+        ).json()
         curr = w["current"]
         return {
-            "city": name,
+            "city": city_name,
             "temp": curr["temperature_2m"],
             "clouds": curr["cloud_cover"],
             "wind": curr["wind_speed_10m"]
