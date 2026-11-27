@@ -528,33 +528,7 @@ if lang == "English":
             "Pentagon UAP Reports and Physics Anomalies",
             "Dark Matter and Multiverse Theories",
             "The Mystery of Interstellar Object Oumuamua"
-        ],
-loc = get_geolocation()
-weather = None
-
-if loc and "coords" in loc:
-    lat = loc["coords"]["latitude"]
-    lon = loc["coords"]["longitude"]
-    weather = get_live_gps_weather(lat, lon)
-
-if weather:
-    sky_status = "CLEAR FOR OBSERVATION" if weather["clouds"] < 35 else ("PARTIAL CLOUD" if weather["clouds"] < 70 else "HEAVY OVERCAST")
-    sky_color = "#39ff14" if weather["clouds"] < 35 else ("#38bdf8" if weather["clouds"] < 70 else "#f59e0b")
-    st.markdown(
-        f'<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; background:linear-gradient(135deg, rgba(18,53,88,0.38) 0%, rgba(4,6,8,0.82) 100%); border:1px solid rgba(56,189,248,0.4); border-left:3px solid {sky_color}; border-radius:8px; padding:10px 18px; margin-top:8px; margin-bottom:14px; font-family:Orbitron,sans-serif;">'
-        f'<div style="font-size:12px; color:#AFC1CD; letter-spacing:1px;">🛰️ LIVE GPS TELEMETRY // <span style="color:#FFFFFF; font-weight:700;">{weather["city"].upper()}</span></div>'
-        f'<div style="display:flex; gap:20px; font-size:13px; font-weight:700; color:#E2E8F0;">'
-        f'<span>🌡️ <span style="color:#39ff14;">{weather["temp"]}°C</span></span>'
-        f'<span>☁️ <span style="color:#38bdf8;">{weather["clouds"]}% CLOUD</span></span>'
-        f'<span>💨 <span style="color:#AFC1CD;">{weather["wind"]} MPH</span></span>'
-        f'</div>'
-        f'<div style="font-size:10px; font-weight:700; color:{sky_color}; border:1px solid {sky_color}; padding:3px 10px; border-radius:20px; letter-spacing:1px;">{sky_status}</div>'
-        f'</div>',
-        unsafe_allow_html=True
-    )
-else:
-    st.caption("📡 Acquiring GPS satellite lock... (Allow location access in your browser)")
-        
+        ],      
         "tab1": "📡 Live Cosmic Report",
         "tab2": "🔭 James Webb Live",
         "tab3": "🗂️ Pentagon UAP Vault",
@@ -901,6 +875,32 @@ with col3:
     st.metric(label=ui["m3_label"], value=ui["m3_val"], delta=ui["m3_delta"])
 
 st.write("")
+
+loc = get_geolocation()
+weather = None
+
+if loc and "coords" in loc:
+    lat = loc["coords"]["latitude"]
+    lon = loc["coords"]["longitude"]
+    weather = get_live_gps_weather(lat, lon)
+
+if weather:
+    sky_status = "CLEAR FOR OBSERVATION" if weather["clouds"] < 35 else ("PARTIAL CLOUD" if weather["clouds"] < 70 else "HEAVY OVERCAST")
+    sky_color = "#39ff14" if weather["clouds"] < 35 else ("#38bdf8" if weather["clouds"] < 70 else "#f59e0b")
+    st.markdown(
+        f'<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; background:linear-gradient(135deg, rgba(18,53,88,0.38) 0%, rgba(4,6,8,0.82) 100%); border:1px solid rgba(56,189,248,0.4); border-left:3px solid {sky_color}; border-radius:8px; padding:10px 18px; margin-top:8px; margin-bottom:14px; font-family:Orbitron,sans-serif;">'
+        f'<div style="font-size:12px; color:#AFC1CD; letter-spacing:1px;">🛰️ LIVE GPS TELEMETRY // <span style="color:#FFFFFF; font-weight:700;">{weather["city"].upper()}</span></div>'
+        f'<div style="display:flex; gap:20px; font-size:13px; font-weight:700; color:#E2E8F0;">'
+        f'<span>🌡️ <span style="color:#39ff14;">{weather["temp"]}°C</span></span>'
+        f'<span>☁️ <span style="color:#38bdf8;">{weather["clouds"]}% CLOUD</span></span>'
+        f'<span>💨 <span style="color:#AFC1CD;">{weather["wind"]} MPH</span></span>'
+        f'</div>'
+        f'<div style="font-size:10px; font-weight:700; color:{sky_color}; border:1px solid {sky_color}; padding:3px 10px; border-radius:20px; letter-spacing:1px;">{sky_status}</div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
+else:
+    st.caption("📡 Acquiring GPS satellite lock... (Allow location access in your browser)")
 
 tab_labels = [
     ui["tab1"], ui["tab2"], ui["tab3"], ui["tab4"], ui["tab5"], ui["tab6"], ui["tab7"]
