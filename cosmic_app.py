@@ -83,7 +83,9 @@ st.markdown("""
     background-attachment: fixed;
     color: #E2E8F0 !important;
     font-family: 'Inter', sans-serif;
-}
+} 
+</style>
+""", unsafe_allow_html=True)
 header[data-testid="stHeader"] {
     background-color: rgba(4, 6, 8, 0.65) !important;
     backdrop-filter: blur(10px);
