@@ -79,7 +79,6 @@ st.markdown(
 st.markdown("""
 </style>""", unsafe_allow_html=True)
 .stApp {
-.stApp {
     background-color: #040608;
     background-image: linear-gradient(180deg, rgba(4, 6, 8, 0.74) 0%, rgba(4, 6, 8, 0.86) 55%, rgba(4, 6, 8, 0.96) 100%), radial-gradient(circle at 65% 30%, rgba(31, 99, 155, 0.22) 0%, transparent 55%), url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=2072&q=85");
     background-size: cover;
