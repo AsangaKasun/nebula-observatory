@@ -72,9 +72,13 @@ st.markdown("""
 # ==========================================
 # 2. CLEAN THEME (ORBITRON + INTER + VERTICAL HUD BUBBLE TABS)
 # ==========================================
-st.markdown("""
+st.markdown(
+    "<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;900&display=swap');</style>",
+    unsafe_allow_html=True
+)
+st.html("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;900&display=swap');
+.stApp {
 .stApp {
     background-color: #040608;
     background-image: linear-gradient(180deg, rgba(4, 6, 8, 0.74) 0%, rgba(4, 6, 8, 0.86) 55%, rgba(4, 6, 8, 0.96) 100%), radial-gradient(circle at 65% 30%, rgba(31, 99, 155, 0.22) 0%, transparent 55%), url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=2072&q=85");
