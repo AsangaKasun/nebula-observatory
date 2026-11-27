@@ -788,6 +788,50 @@ with st.sidebar:
     st.subheader(ui["preset_title"])
     preset_topic = st.selectbox(ui["preset_label"], ui["presets"])
 
+    st.markdown("---")
+    st.markdown(
+        '<div style="font-family: Orbitron, sans-serif; font-size: 12px; color: #38bdf8; letter-spacing: 1.5px; margin-bottom: 6px;">📟 MISSION LOG RECORDER</div>',
+        unsafe_allow_html=True
+    )
+    
+    quick_note = st.text_area(
+        "Field Observation / Quick Note",
+        placeholder="Log anomaly coordinates, sightings, or notes...",
+        height=75,
+        label_visibility="collapsed"
+    )
+    
+    col_log1, col_log2 = st.columns(2)
+    with col_log1:
+        if st.button("➕ Save Log", use_container_width=True):
+            if quick_note.strip():
+                log_mission_entry("MANUAL FIELD NOTE", quick_note.strip())
+                st.toast("Logged to N.E.B.U.L.A. Black Box!", icon="✅")
+    with col_log2:
+        if st.button("🗑️ Clear", use_container_width=True):
+            st.session_state.mission_logs = []
+            st.rerun()
+
+    st.caption(f"Recorded Entries: **{len(st.session_state.mission_logs)}**")
+
+    if st.session_state.mission_logs:
+        log_report = "=========================================\n"
+        log_report += "   N.E.B.U.L.A. OBSERVATORY MISSION LOG\n"
+        log_report += "=========================================\n\n"
+        for idx, item in enumerate(st.session_state.mission_logs, 1):
+            log_report += f"[{idx}] {item['time']} | MODULE: {item['module']}\n"
+            log_report += f"{item['entry']}\n"
+            log_report += "-" * 45 + "\n\n"
+
+        file_stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M")
+        st.download_button(
+            label="📥 Download Mission Log",
+            data=log_report,
+            file_name=f"NEBULA_Mission_Log_{file_stamp}.txt",
+            mime="text/plain",
+            use_container_width=True
+        )
+
 # ==========================================
 # 6. MAIN DASHBOARD HEADER, HUD & VERTICAL BUBBLE TABS
 # ==========================================
