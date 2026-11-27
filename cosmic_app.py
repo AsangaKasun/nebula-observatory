@@ -102,6 +102,28 @@ try:
 except Exception:
     api_key = ""
 
+import requests
+
+@st.cache_data(ttl=900)
+def get_sky_weather(city="London"):
+    try:
+        geo = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1", timeout=5).json()
+        if not geo.get("results"):
+            return None
+        lat = geo["results"][0]["latitude"]
+        lon = geo["results"][0]["longitude"]
+        name = geo["results"][0]["name"]
+        w = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,cloud_cover,wind_speed_10m&wind_speed_unit=mph", timeout=5).json()
+        curr = w["current"]
+        return {
+            "city": name,
+            "temp": curr["temperature_2m"],
+            "clouds": curr["cloud_cover"],
+            "wind": curr["wind_speed_10m"]
+        }
+    except Exception:
+        return None
+
 client = genai.Client(api_key=api_key)
 
 models_to_try = [
