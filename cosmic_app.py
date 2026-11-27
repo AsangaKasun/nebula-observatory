@@ -82,6 +82,21 @@ st.markdown("""
 # ==========================================
 # 3. GEMINI AI ENGINE & PENTAGON DATABASE
 # ==========================================
+from datetime import datetime, timezone
+
+# ==========================================
+# MISSION LOG ENGINE (BLACK BOX RECORDER)
+# ==========================================
+if "mission_logs" not in st.session_state:
+    st.session_state.mission_logs = []
+
+def log_mission_entry(source_module, content):
+    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    st.session_state.mission_logs.append({
+        "time": timestamp,
+        "module": source_module,
+        "entry": content
+    })
 try:
     api_key = st.secrets["GEMINI_API_KEY"]
 except Exception:
